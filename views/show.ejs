@@ -3,7 +3,7 @@
 
 <head>
     <base href="../">
-    <title>Khoa Pham</title>
+    <title>Hotgirls...</title>
     <style>
         hr {
             visibility: hidden;
@@ -33,7 +33,7 @@
         <div class="div-control">
             <a href="/like/<%= id %>" id="a-like">
                 <%= like %> Like</a>
-            <a href="#">
+            <a href="/dislike/<%= id %>" id="a-dislike">
                 <%= dislike %> Dislike</a>
         </div>
     </div>
@@ -45,23 +45,38 @@
     //     e.preventDefault();
     //     $.get('http://localhost:3000/views', data => console.log(data))
     // });
-    $('#a-like').click((e) => {
+
+
+    let currentId = <%= id %>
+        
+
+    $('#a-next').click((e) => {
         e.preventDefault();
-        $.get('/like/<%= id %>', data => {
-            $('#a-like').html(data + ' Like')
+        $.get('/girl/' + (currentId + 1), data => {
+            currentId = data.id;
+            $('#h3-name').html(data.name);
+            $('#img-avatar').attr('src', data.image);
+            $('#a-like').html(data.like + ' like');
+            $('#a-dislike').html(data.dislike + ' dislike');
         });
     });
 
-    let currentId = <%= id %>
-
-        $('#a-next').click((e) => {
+    $('#a-like').click((e) => {
             e.preventDefault();
-            $.get('/girl/' + (currentId + 1), data => {
-                currentId = data.id;
-                $('#h3-name').html(data.name);
-                $('#img-avatar').attr('src', data.image);
+            $.get('/like/' + currentId, data => {
+                $('#a-like').html(data + ' like')
             });
         });
+
+
+    $('#a-dislike').click((e) => {
+        e.preventDefault();
+        $.get('/dislike/' + currentId, data => {
+            $('#a-dislike').html(data + ' dislike')
+        });
+    });
+''
+
 </script>
 
 </html>

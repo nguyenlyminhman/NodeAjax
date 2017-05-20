@@ -25,13 +25,14 @@ class HotGirl {
         });
     }
 
-    // dislikeGirl(cb) {
-    //    const sql = 'UPDATE public."hotgirls" SET "dislike"="dislike" - 1 WHERE id = $1 RETURNING "dislike"';
-    //     queryDB(sql, [this.id], (err, result) => {
-    //         if (err) return cb(err);
-    //         cb(undefined, result.rows[0].like);
-    //     });
-    // }
+    dislikeGirl(cb) {
+        const sql = 'UPDATE public."hotgirls" SET "dislike"="dislike" + 1' +
+            'WHERE id = $1 RETURNING "dislike"';
+        queryDB(sql, [this.id], (err, result) => {
+            if (err) return cb(err);
+            cb(undefined, result.rows[0].dislike);
+        });
+    }
 
 
 }

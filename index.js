@@ -36,6 +36,16 @@ app.get('/like/:id', (req, res) => {
     });
 });
 
+app.get('/dislike/:id', (req, res) => {
+    const { id } = req.params;
+    const girl = new HotGirl(id);
+    girl.dislikeGirl((err, dislike) => {
+        if (err) return res.send(err);
+        res.send(dislike.toString());
+    });
+});
+
+//Load ajax to count like and next image
 app.get('/girl/:id', (req, res) => {
     const { id } = req.params;
     const girl = new HotGirl(id);
