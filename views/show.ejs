@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="../">
+    <title>Khoa Pham</title>
+    <style>
+        hr {
+            visibility: hidden;
+        }
+
+        .div-control {
+            display: flex;
+            width: 300px;
+            justify-content: space-between
+        }
+    </style>
+    <script src="jquery.js"></script>
+</head>
+
+<body>
+    <div>
+        <h3 id="h3-name">
+            <%= name %>
+        </h3>
+        <div class="div-control">
+            <a href="/show/<%= id - 1 %>">Trở lại</a>
+            <a href="/show/<%= id + 1 %>" id="a-next">Tiếp</a>
+        </div>
+        <hr />
+        <img src="<%= image %>" width="300" alt="" id="img-avatar">
+        <hr />
+        <div class="div-control">
+            <a href="/like/<%= id %>" id="a-like">
+                <%= like %> Like</a>
+            <a href="#">
+                <%= dislike %> Dislike</a>
+        </div>
+    </div>
+    <a id="a-fetch" href="#">FETCH DATA</a>
+    <br />
+</body>
+<script>
+    // $('#a-fetch').click((e) => {
+    //     e.preventDefault();
+    //     $.get('http://localhost:3000/views', data => console.log(data))
+    // });
+    $('#a-like').click((e) => {
+        e.preventDefault();
+        $.get('/like/<%= id %>', data => {
+            $('#a-like').html(data + ' Like')
+        });
+    });
+
+    let currentId = <%= id %>
+
+        $('#a-next').click((e) => {
+            e.preventDefault();
+            $.get('/girl/' + (currentId + 1), data => {
+                currentId = data.id;
+                $('#h3-name').html(data.name);
+                $('#img-avatar').attr('src', data.image);
+            });
+        });
+</script>
+
+</html>
